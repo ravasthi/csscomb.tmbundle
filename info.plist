@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>contactEmailRot13</key>
+	<string>qnivq@ryrzragny-vzntvat.pbz</string>
+	<key>contactName</key>
+	<string>David Aaron Fendley</string>
+	<key>description</key>
+	<string>TextMate bundle for CSScomb (https://github.com/csscomb/csscomb.js).
+</string>
+	<key>name</key>
+	<string>CSScomb</string>
+	<key>uuid</key>
+	<string>B693B381-2CFA-4C2E-912D-7005E4D85CDF</string>
+</dict>
+</plist>
