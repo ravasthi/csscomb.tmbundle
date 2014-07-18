@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
 	<key>command</key>
 	<string>#!/usr/bin/env node
 
@@ -53,16 +55,22 @@ while (true) { // Loop as long as stdin input is available.
 
 fs.writeSync(process.stdout.fd, comb.processString(concatString));</string>
 	<key>input</key>
-	<string>document</string>
+	<string>selection</string>
+	<key>inputFormat</key>
+	<string>text</string>
 	<key>keyEquivalent</key>
 	<string>^c</string>
 	<key>name</key>
 	<string>Comb CSS</string>
 	<key>outputCaret</key>
 	<string>interpolateByLine</string>
+	<key>outputFormat</key>
+	<string>text</string>
 	<key>outputLocation</key>
-	<string>replaceDocument</string>
+	<string>replaceSelection</string>
 	<key>uuid</key>
 	<string>E51A2199-9B7F-4A39-B2D1-2F7671109E12</string>
+	<key>version</key>
+	<integer>2</integer>
 </dict>
 </plist>
