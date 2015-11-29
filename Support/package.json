@@ -1,0 +1,26 @@
+{
+  "name": "csscomb.tmbundle",
+  "version": "0.0.1",
+  "description": "A TextMate bundle for CSScomb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ravasthi/csscomb.tmbundle.git"
+  },
+  "keywords": [
+    "csscomb",
+    "node"
+  ],
+  "author": "Richa Avasthi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ravasthi/csscomb.tmbundle/issues"
+  },
+  "homepage": "https://github.com/ravasthi/CSScomb.tmbundle#readme",
+  "dependencies": {
+    "csscomb": "^3.1.8"
+  }
+}

@@ -7,20 +7,50 @@
 	<key>command</key>
 	<string>#!/usr/bin/env node
 
-var fs = require('fs');
-var Comb = require("csscomb")
-var comb = new Comb();
-var tilde = require("tilde-expansion");
+var fs   = require('fs'),
+    path = require('path'),
+    Comb = require(process.env.TM_BUNDLE_SUPPORT + '/node_modules/csscomb/lib/csscomb');
 
-var BUFSIZE=256;
-var buf = new Buffer(BUFSIZE);
-var bytesRead;
+var BUFSIZE      = 256,
+    buf          = new Buffer(BUFSIZE),
+    bytesRead,
+    comb         = new Comb(),
+    concatString = '',
+    syntax       = path.extname(process.env.TM_FILEPATH).substring(1);
 
-var concatString = "";
+var combConfig,
+    configFilePath    = '/.csscomb.json',
+    globalConfigPath  = process.env.HOME + configFilePath,
+    globalConfig,
+    projectConfigPath = process.env.TM_PROJECT_DIRECTORY + configFilePath,
+    projectConfig;
 
-tilde("~/.csscomb.json", function(s) {
-  comb.configure(require(s));
-});
+try {
+  globalConfig  = fs.statSync(globalConfigPath);
+  projectConfig = fs.statSync(projectConfigPath);
+} catch (e) {
+  if (e.code !== 'ENOENT') {
+    // If it's not a 'file not found' error, throw it again.
+    throw e;
+  }
+}
+
+/*
+** Try to get configuration in this order:
+**
+** 1. .csscomb.json in the TM project's root directory.
+** 2. .csscomb.json in the user's home directory
+** 3. The default csscomb configuration
+*/
+if (projectConfig &amp;&amp; projectConfig.isFile()) {
+  combConfig = require(projectConfigPath);
+} else if (globalConfig &amp;&amp; globalConfig.isFile()) {
+  combConfig = require(globalConfigPath);
+} else {
+  combConfig = Comb.getConfig('csscomb');
+}
+
+comb.configure(combConfig)
 
 while (true) { // Loop as long as stdin input is available.
     bytesRead = 0;
@@ -53,7 +83,8 @@ while (true) { // Loop as long as stdin input is available.
   concatString += buf.toString(null, 0, bytesRead);
 }
 
-fs.writeSync(process.stdout.fd, comb.processString(concatString));</string>
+fs.writeSync(process.stdout.fd, comb.processString(concatString, { syntax: syntax }));
+</string>
 	<key>input</key>
 	<string>selection</string>
 	<key>inputFormat</key>
@@ -68,6 +99,8 @@ fs.writeSync(process.stdout.fd, comb.processString(concatString));</string>
 	<string>text</string>
 	<key>outputLocation</key>
 	<string>replaceSelection</string>
+	<key>scope</key>
+	<string>source.css, source.scss, source.less</string>
 	<key>uuid</key>
 	<string>E51A2199-9B7F-4A39-B2D1-2F7671109E12</string>
 	<key>version</key>

@@ -5,12 +5,8 @@ A TextMate bundle for [CSScomb](https://github.com/csscomb/csscomb.js).
 
 # Requirements
 
-1. [Node](http://nodejs.org)
-1. [tilde-expansion](https://www.npmjs.org/package/tilde-expansion)
-1. [CSScomb](https://github.com/csscomb/csscomb.js)
-
-Note: This expects you to have a CSScomb configuration file at: `~/.csscomb.json`.
-
+1. Have [node.js](http://nodejs.org) installed and its executable somewhere in the system or TextMate path
+1. A CSScomb configuration file either in your project’s root directory or in `~/.csscomb.json`.
 
 # Installation
 
@@ -18,9 +14,13 @@ Note: This expects you to have a CSScomb configuration file at: `~/.csscomb.json
 
     mkdir -p ~/Library/Application\ Support/Avian/Bundles
     cd ~/Library/Application\ Support/Avian/Bundles
-    git clone git://github.com/tricon/csscomb-tmbundle CSScomb.tmbundle
+    git clone git://github.com/ravasthi/csscomb.tmbundle
 
 
 # Commands
 
 1. Comb CSS (`⌃C`) — Process current document.
+
+# Acknowledgements
+
+Based on [https://github.com/tricon/csscomb-tmbundle]().
