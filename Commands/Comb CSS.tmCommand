@@ -86,7 +86,7 @@ while (true) { // Loop as long as stdin input is available.
 fs.writeSync(process.stdout.fd, comb.processString(concatString, { syntax: syntax }));
 </string>
 	<key>input</key>
-	<string>selection</string>
+	<string>document</string>
 	<key>inputFormat</key>
 	<string>text</string>
 	<key>keyEquivalent</key>
@@ -98,7 +98,7 @@ fs.writeSync(process.stdout.fd, comb.processString(concatString, { syntax: synta
 	<key>outputFormat</key>
 	<string>text</string>
 	<key>outputLocation</key>
-	<string>replaceSelection</string>
+	<string>replaceDocument</string>
 	<key>scope</key>
 	<string>source.css, source.scss, source.less</string>
 	<key>uuid</key>
