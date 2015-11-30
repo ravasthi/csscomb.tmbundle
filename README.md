@@ -6,7 +6,7 @@ A TextMate bundle for [CSScomb](https://github.com/csscomb/csscomb.js).
 # Requirements
 
 1. Have [node.js](http://nodejs.org) installed and its executable somewhere in the system or TextMate path
-1. A CSScomb configuration file either in your project’s root directory or in `~/.csscomb.json`.
+1. *(Optional)* A CSScomb configuration file either in your project’s root directory or in `~/.csscomb.json`. If neither exists, this bundle will fall back to the default csscomb configuration.
 
 # Installation
 
