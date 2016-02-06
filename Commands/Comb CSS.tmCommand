@@ -7,15 +7,14 @@
 	<key>command</key>
 	<string>#!/usr/bin/env node
 
-var fs   = require('fs'),
-    path = require('path'),
-    Comb = require(process.env.TM_BUNDLE_SUPPORT + '/node_modules/csscomb/lib/csscomb');
+var fs       = require('fs'),
+    path     = require('path'),
+    stdin    = process.stdin,
+    Comb     = require(process.env.TM_BUNDLE_SUPPORT + '/node_modules/csscomb/lib/csscomb');
 
-var BUFSIZE      = 256,
-    buf          = new Buffer(BUFSIZE),
-    bytesRead,
-    comb         = new Comb(),
-    concatString = '',
+var comb         = new Comb(),
+    inputString  = '',
+    outputString = '',
     syntax       = path.extname(process.env.TM_FILEPATH).substring(1);
 
 var combConfig,
@@ -26,13 +25,13 @@ var combConfig,
     projectConfig;
 
 try {
-  globalConfig  = fs.statSync(globalConfigPath);
-  projectConfig = fs.statSync(projectConfigPath);
+    globalConfig  = fs.statSync(globalConfigPath);
+    projectConfig = fs.statSync(projectConfigPath);
 } catch (e) {
-  if (e.code !== 'ENOENT') {
-    // If it's not a 'file not found' error, throw it again.
-    throw e;
-  }
+    if (e.code !== 'ENOENT') {
+        // If it's not a 'file not found' error, throw it again.
+        throw e;
+    }
 }
 
 /*
@@ -43,47 +42,27 @@ try {
 ** 3. The default csscomb configuration
 */
 if (projectConfig &amp;&amp; projectConfig.isFile()) {
-  combConfig = require(projectConfigPath);
+    combConfig = require(projectConfigPath);
 } else if (globalConfig &amp;&amp; globalConfig.isFile()) {
-  combConfig = require(globalConfigPath);
+    combConfig = require(globalConfigPath);
 } else {
-  combConfig = Comb.getConfig('csscomb');
+    combConfig = Comb.getConfig('csscomb');
 }
 
-comb.configure(combConfig)
+comb.configure(combConfig);
 
-while (true) { // Loop as long as stdin input is available.
-    bytesRead = 0;
-    try {
-        bytesRead = fs.readSync(process.stdin.fd, buf, 0, BUFSIZE);
-    } catch (e) {
-        if (e.code === 'EAGAIN') { // 'resource temporarily unavailable'
-            // Happens on OS X 10.8.3 (not Windows 7!), if there's no
-            // stdin input - typically when invoking a script without any
-            // input (for interactive stdin input).
-            // If you were to just continue, you'd create a tight loop.
-            console.error('ERROR: interactive stdin input not supported.');
-            process.exit(1);
-        } else if (e.code === 'EOF') {
-            // Happens on Windows 7, but not OS X 10.8.3:
-            // simply signals the end of *piped* stdin input.
-            break;
-        }
-        throw e; // unexpected exception
-    }
-    if (bytesRead === 0) {
-        // No more stdin input available.
-        // OS X 10.8.3: regardless of input method, this is how the end
-        //   of input is signaled.
-        // Windows 7: this is how the end of input is signaled for
-        //   *interactive* stdin input.
-        break;
-    }
-  // Process the chunk read.
-  concatString += buf.toString(null, 0, bytesRead);
-}
+stdin.resume();
+stdin.setEncoding('utf8');
+process.stdin.on('data', function(buf) {
+    inputString += buf;
+});
+process.stdin.on('end', function () {
+    outputString = comb.processString(inputString, { syntax: syntax });
 
-fs.writeSync(process.stdout.fd, comb.processString(concatString, { syntax: syntax }));
+    process.stdout.write(outputString + '\n');
+});
+
+
 </string>
 	<key>input</key>
 	<string>document</string>
