@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/ravasthi/CSScomb.tmbundle#readme",
   "dependencies": {
-    "csscomb": "^3.1.8"
+    "csscomb": "^4.2.0"
   }
 }
